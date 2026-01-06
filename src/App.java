@@ -1,6 +1,6 @@
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import javax.swing.*;
 
 public class App {
 
@@ -12,11 +12,11 @@ public class App {
         // create a list of top 5 things
         // --- TO DO: Change to your own list ---
         String[] top5 = {
-            "1. Coding",
-            "2. Music",
-            "3. Movies",
-            "4. Sports",
-            "5. Travel"
+            "1. Snorkeling",
+            "2. Shave ice",
+            "3. Turtle",
+            "4. Relaxing",
+            "5. Golf"
         };
 
          // A JFrame is a window where we can design our UI
@@ -28,8 +28,14 @@ public class App {
         JButton nextButton = new JButton("Next");
         JLabel outputLabel = new JLabel();
         // --- TO DO: create a back button, format, and add it to the frame ---
+        JButton backButton = new JButton("Back");
+        // --- TO DO: Make a buton for a random position in the list ---
+        JButton randomButton = new JButton("Random");
 
         // place and size for components
+        backButton.setBounds(250, 200, 100, 50);
+        randomButton.setBounds(175, 250, 100, 50);
+
         // setBounds(x position, y position, width, height)
         nextButton.setBounds(100, 200, 100, 50);
         outputLabel.setBounds(100,100,200,50);
@@ -42,6 +48,8 @@ public class App {
         // add components to JFrame f
         frame.add(outputLabel);
         frame.add(nextButton);
+        frame.add(backButton);
+        frame.add(randomButton);
 
         // add event listener for button click
         nextButton.addActionListener(new ActionListener() {
@@ -51,8 +59,19 @@ public class App {
         }    });
 
         // --- TO DO: add event listener for back button ---
-        // --- TO DO: create a getPreviousIndex function, see below ---
+        backButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                currentIndex = getPreviousIndex(currentIndex, top5.length);
+                outputLabel.setText(top5[currentIndex]);
+            }    });
 
+        // --- TO DO: add event listener for random button ---
+        randomButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                currentIndex = (int) (Math.random() * top5.length);
+                outputLabel.setText(top5[currentIndex]);
+            }
+        });
 
         // make the frame visible
         frame.setVisible(true);
@@ -72,14 +91,21 @@ public class App {
                 return currentIndex + 1; // move to the next index
             }
         }
-
-    // --- TO DO: create a getPreviousIndex function ---
-    /**
-     *  find the next index in the list
-     * @param currentIndex
-     * @param listLength
-     * @return previous index
-     */
+        // --- previous index helper ---
+        /**
+         *  find the previous index in the list
+         * @param currentIndex
+         * @param listLength
+         * @return previous index
+         */
+        public static int getPreviousIndex(int currentIndex, int listLength) {
+            if (currentIndex == 0) {
+                return listLength - 1; // wrap around to the end
+            }
+            else {
+                return currentIndex - 1; // move to the previous index
+            }
+        }
     
 }
 
